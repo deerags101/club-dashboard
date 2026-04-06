@@ -1,0 +1,32 @@
+<h1>Admin Panel</h1>
+
+<a href="/logout">Logout</a>
+
+<h3>Add Team</h3>
+<form action="/add_team" method="POST">
+    <input name="name" placeholder="Team Name">
+    <input name="leader" placeholder="Leader">
+    <button>Add</button>
+</form>
+
+<h3>Add Member</h3>
+<form action="/add_member" method="POST">
+    <input name="name" placeholder="Member Name">
+    <select name="team_id">
+        {% for t in teams %}
+        <option value="{{ t[0] }}">{{ t[1] }}</option>
+        {% endfor %}
+    </select>
+    <button>Add</button>
+</form>
+
+<h3>Add Score</h3>
+<form action="/add_score" method="POST">
+    <input name="score" placeholder="Score">
+    <select name="team_id">
+        {% for t in teams %}
+        <option value="{{ t[0] }}">{{ t[1] }}</option>
+        {% endfor %}
+    </select>
+    <button>Add</button>
+</form>
