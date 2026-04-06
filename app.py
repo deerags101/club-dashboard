@@ -1,10 +1,46 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import os
 
 app = Flask(__name__)
 
+# 🔥 AUTO DATABASE CREATE (FREE DEPLOY FIX)
+def init_db_auto():
+    conn = sqlite3.connect("database.db")
+
+    conn.execute("""
+    CREATE TABLE IF NOT EXISTS teams (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        leader TEXT
+    )
+    """)
+
+    conn.execute("""
+    CREATE TABLE IF NOT EXISTS members (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        team_id INTEGER
+    )
+    """)
+
+    conn.execute("""
+    CREATE TABLE IF NOT EXISTS scores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        team_id INTEGER,
+        score INTEGER
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+# 👉 AUTO RUN
+init_db_auto()
+
 def get_db():
     return sqlite3.connect("database.db")
+
 
 @app.route('/')
 def index():
@@ -36,9 +72,7 @@ def index():
             "members": member_list
         })
 
-    # ✅ IMPORTANT FIX
     all_teams = conn.execute("SELECT id, name FROM teams").fetchall()
-
     conn.close()
 
     return render_template("index.html", teams=team_data, all_teams=all_teams)
@@ -81,8 +115,9 @@ def add_score():
     conn.close()
 
     return redirect('/')
-import os
 
+
+# 🔥 RENDER DEPLOY FIX
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
