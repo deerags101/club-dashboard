@@ -33,6 +33,8 @@
 
 <h1>⚙️ Admin Panel</h1>
 
+<a href="/logout">Logout</a>
+
 <!-- ADD TEAM -->
 <form action="/add_team" method="POST">
     <input name="name" placeholder="Team Name" required>
@@ -45,7 +47,7 @@
     <input name="name" placeholder="Member Name" required>
 
     <select name="team_id">
-        {% for t in all_teams %}
+        {% for t in teams %}
         <option value="{{ t[0] }}">{{ t[1] }}</option>
         {% endfor %}
     </select>
@@ -58,7 +60,7 @@
     <input name="score" placeholder="Score" required>
 
     <select name="team_id">
-        {% for t in all_teams %}
+        {% for t in teams %}
         <option value="{{ t[0] }}">{{ t[1] }}</option>
         {% endfor %}
     </select>
