@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <style>
+        body {
+            background: #020617;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        h1 {
+            color: #38bdf8;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background: #38bdf8;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>⚙️ Admin Panel</h1>
+
+<!-- ADD TEAM -->
+<form action="/add_team" method="POST">
+    <input name="name" placeholder="Team Name" required>
+    <input name="leader" placeholder="Leader Name" required>
+    <button>Add Team</button>
+</form>
+
+<!-- ADD MEMBER -->
+<form action="/add_member" method="POST">
+    <input name="name" placeholder="Member Name" required>
+
+    <select name="team_id">
+        {% for t in all_teams %}
+        <option value="{{ t[0] }}">{{ t[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <button>Add Member</button>
+</form>
+
+<!-- ADD SCORE -->
+<form action="/add_score" method="POST">
+    <input name="score" placeholder="Score" required>
+
+    <select name="team_id">
+        {% for t in all_teams %}
+        <option value="{{ t[0] }}">{{ t[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <button>Add Score</button>
+</form>
+
+</body>
+</html>
